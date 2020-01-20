@@ -18,7 +18,9 @@ Steps to install all the required libraries.
 -->Follow this thread to install dlib --> https://www.learnopencv.com/install-dlib-on-ubuntu/ .
 
 -->Follow this thread to install cmake which is required to install dlib --> https://cmake.org/install/
+
 --->Installing cmake will take more time depends on the speed of you computer. for me it takes 30mins.
+
 -->Now it is easy to install remaining module.. just use pip to install all other modules.
 Modules to be installed:
 pillow
