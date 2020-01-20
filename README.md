@@ -12,8 +12,11 @@ Read all the steps carefull to successfully run my project.
 Steps to install all the required libraries.
 
 -->Install all the required modules so that you won't get any problems.
+
 -->The big module is dlib library it takes more time to install this library..
--->Follow this thread to install dlib --> https://www.learnopencv.com/install-dlib-on-ubuntu/
+
+-->Follow this thread to install dlib --> https://www.learnopencv.com/install-dlib-on-ubuntu/ .
+
 -->Follow this thread to install cmake which is required to install dlib --> https://cmake.org/install/
 --->Installing cmake will take more time depends on the speed of you computer. for me it takes 30mins.
 -->Now it is easy to install remaining module.. just use pip to install all other modules.
