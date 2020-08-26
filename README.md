@@ -1,6 +1,6 @@
 # Smart-Attendance-Management-System-Using-Face-Recognition
 
-Create a virtual environment and install these modules. if you don't know about virtual environment,do [Google](https://google.com).
+Create a virtual environment and install these modules. if you don't know about virtual environment,do [Google](https://google.com).\
 Read all the steps carefully to run my project successfully.
 
 ---
