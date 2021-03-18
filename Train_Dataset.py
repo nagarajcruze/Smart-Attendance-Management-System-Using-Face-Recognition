@@ -5,12 +5,14 @@ import numpy as np
 import glob
 
 
-dictionary = {}
+dictionaryy = {}
 
-for i in glob.glob('pics/*.jpg'):
+for i in glob.glob('pics\\*.jpg'):
     m = face_recognition.load_image_file(i)
-    print("############",i,"###############\n")
     face_encoding = face_recognition.face_encodings(m)
     a  = np.array(face_encoding).tolist()
-    dictionary[i]= a[0]
-    print("Face Location is Succeffully trained, Stored at",i,"\n")
+    try:
+        dictionaryy[i] = a[0]
+    except IndexError:
+        print("{} Face is Not Clear".format(i))
+    print(i[5:]+"'s Model Trained Succeffully \n")

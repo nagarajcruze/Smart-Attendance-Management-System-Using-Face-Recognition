@@ -3,27 +3,19 @@ from PIL import Image
 import face_recognition
 import numpy as np
 import glob
+import  csv
+from time import strftime
+from Train_Dataset import dictionaryy
 
-#name =r input("Enter your name: ")
 print("RECOGNIZER STARTED ")
 print("Please wait, It will take some time.....")
-dictionary = {}
-for i in glob.glob('pics/*.jpg'):
-    m = face_recognition.load_image_file(i)
-    face_encoding = face_recognition.face_encodings(m)
-    a  = np.array(face_encoding).tolist()
-    print("Face Values for the person",i,"is Tained")
-    dictionary[i]= a[0]
 
-
+dictionary = dictionaryy
 encodes = [i for i in dictionary.values()]
 known_face_encodings = encodes
-#print(known_face_encodings)
-#names = [i for i in dictionary.keys()]
-names1 = [w.replace('pics/', '') for w in dictionary.keys()]
-names = [w.replace('.jpg', '') for w in names1]
-known_face_names = names
-#print(names)
+names1 = [w.replace('pics\\', '') for w in dictionary.keys()]
+namess = [w.replace('.jpg', '') for w in names1]
+known_face_names = namess
 
 video_capture = cv2.VideoCapture(0)
 
@@ -32,7 +24,7 @@ face_locations = []
 face_encodings = []
 face_names = []
 process_this_frame = True
-
+names = list()
 while True:
     # Grab a single frame of video
     ret, frame = video_capture.read()
@@ -70,7 +62,6 @@ while True:
 
     process_this_frame = not process_this_frame
 
-
     # Display the results
     for (top, right, bottom, left), name in zip(face_locations, face_names):
         # Scale back up face locations since the frame we detected in was scaled to 1/4 size
@@ -86,14 +77,48 @@ while True:
         cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (255, 204, 153), cv2.FILLED)
         font = cv2.FONT_HERSHEY_DUPLEX
         cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (0,0,0), 1)
-
+        names.append(name)
+        
     # Display the resulting image
     cv2.imshow('Recognizing', frame)
-
     # Hit 'q' on the keyboard to quit!
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
-
 # Release handle to the webcam
 video_capture.release()
 cv2.destroyAllWindows()
+
+
+
+#time and date is imported from the time module
+time = strftime("%I:%M%p") #%I is used  for 12hr format,use %H instead  of %I for 24Hr format,
+                           #%p is used for AM/PM 
+date = strftime("%d-%m-%Y")
+#print("it is found",recognized_faces[Person])
+#recognized_faces = ["IronMan", "Captain America", "Natasha"]
+
+facings = list(set(names))
+recognized_faces = []
+for i in facings:
+    if i == "Unknown":
+        continue
+    recognized_faces.append(i)
+with open('Attendance_sheet_of_{}.csv'.format(date), 'w') as file:
+    Shadow = csv.writer(file)
+    Header = [['Name', 'Attendance','Time']]
+    Shadow.writerows(Header)
+    for Person in range(len(recognized_faces)):
+        Column_values = [[recognized_faces[Person], 'yes', str(time)]]
+        print("Attendance successfully marked for the person {}".format(recognized_faces[Person]))
+        Shadow.writerows(Column_values)
+f= open("totalmembers.csv", 'r')
+file = csv.reader(f)
+TotalStrength = list()
+for i in file:
+    TotalStrength.append(i[0])
+absentees = sorted(list(set(TotalStrength).difference(set(recognized_faces))))
+f = open('Attendance_sheet_of_{}.csv'.format(date), 'a')
+Shadows = csv.writer(f)
+for absent in absentees:
+    Column_values = [[absent, 'No', str(time)]]
+    Shadows.writerows(Column_values)

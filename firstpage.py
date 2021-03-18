@@ -2,34 +2,32 @@
 from tkinter import *
 import os
 from datetime import datetime;
+from time import strftime
+import os
 #creating instance of TK
 root=Tk()
 
 root.configure(background="white")
 
-#root.geometry("300x300")
-
 def function1():
     
-    os.system("python3 Capture_Images.py")
+    os.system("python Capture_Images.py")
     
 def function2():
     
-    os.system("python3 Train_Dataset.py")
+    os.system("python Train_Dataset.py")
 
 def function3():
 
-    os.system("python3 Recognizer.py")
-
-def function5():    
-   os.startfile(os.getcwd()+"/developers/diet1frame1first.html");
+    os.system("python Recognizer.py")
    
 def function6():
-
     root.destroy()
 
 def attend():
-    os.startfile(os.getcwd()+"/firebase/attendance_files/attendance"+str(datetime.now().date())+'.xls')
+    date = strftime("%d-%m-%Y")
+    cmd = '"C:\\Program Files\\LibreOffice\\program\\soffice.exe" -o Attendance_sheet_of_%s.csv'%date
+    os.system(cmd)
 
 #stting title for the window
 root.title("ATTENDANCE MANAGEMENT USING FACE RECOGNITION")
@@ -49,9 +47,6 @@ Button(root,text="Recognize",font=('times new roman',20),bg="#1aa3ff",fg="white"
 #creating attendance button
 Button(root,text="Attendance Sheet",font=('times new roman',20),bg="#1aa3ff",fg="white",command=attend).grid(row=6,columnspan=2,sticky=N+E+W+S,padx=5,pady=5)
 
-#Button(root,text="Developers",font=('times new roman',20),bg="#0D47A1",fg="white",command=function5).grid(row=8,columnspan=2,sticky=N+E+W+S,padx=5,pady=5)
-
 Button(root,text="Exit",font=('times new roman',20),bg="#ff3333",fg="white",command=function6).grid(row=9,columnspan=2,sticky=N+E+W+S,padx=5,pady=5)
-
 
 root.mainloop()
